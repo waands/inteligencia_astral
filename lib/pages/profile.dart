@@ -53,6 +53,7 @@ class Profile extends StatelessWidget {
                       thickness: 2,
                     ),
                   ),
+                  const SizedBox(height: 25),
 
                   //Notificações
                   const Padding(
@@ -76,6 +77,7 @@ class Profile extends StatelessWidget {
                       thickness: 2,
                     ),
                   ),
+                  const SizedBox(height: 25),
 
                   //Data de nascimento
                   const Text(
@@ -92,6 +94,7 @@ class Profile extends StatelessWidget {
                       thickness: 2,
                     ),
                   ),
+                  const SizedBox(height: 25),
 
                   //Horário de nascimento
                   const Text(
@@ -108,6 +111,7 @@ class Profile extends StatelessWidget {
                       thickness: 2,
                     ),
                   ),
+                  const SizedBox(height: 25),
 
                   //Local de nascimento
                   const Text(
@@ -139,6 +143,7 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                   ),
+                  
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
