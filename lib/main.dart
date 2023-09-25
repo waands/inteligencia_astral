@@ -1,21 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:inteligencia_astral/login.dart';
+import 'package:inteligencia_astral/pages/login.dart';
 
 void main(){
   runApp(MaterialApp(
-    initialRoute: "/",
-    routes: {
-      "/login": (context) => Login(),
-    },
-    home: PrimeiraTela(),
+    home: myApp(),
   ));
 }
 
-class PrimeiraTela extends StatefulWidget {
+class myApp extends StatelessWidget {
   @override
-  _PrimeiraTelaState createState() => _PrimeiraTelaState();
+  Widget build(BuildContext context) {
+    return MaterialApp(
+        //home: CriarGrupo()
+        home: Login());
+  }
+  //_PrimeiraTelaState createState() => _PrimeiraTelaState();
 }
-
+/*
 class _PrimeiraTelaState extends State<PrimeiraTela> {
   @override
   Widget build(BuildContext context) {
@@ -41,6 +42,6 @@ class _PrimeiraTelaState extends State<PrimeiraTela> {
     );
   }
 }
-
+*/
 
 

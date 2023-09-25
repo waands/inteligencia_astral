@@ -1,5 +1,8 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import '/theme.dart';
+import 'package:inteligencia_astral/pages/register.dart';
 import 'package:inteligencia_astral/components/my_buttom.dart';
 import 'package:inteligencia_astral/components/switch.dart';
 import 'package:inteligencia_astral/components/text_field.dart';
@@ -18,8 +21,17 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color.fromARGB(255, 68, 20, 88),
-      body: SafeArea(
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [AppTheme.colors.roxo1, AppTheme.colors.roxo2],
+          )
+        ),
+      
+      //backgroundColor: const Color.fromARGB(255, 68, 20, 88),
+      child: SafeArea(
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -31,15 +43,15 @@ class Login extends StatelessWidget {
             const SizedBox(height: 25),
 
             //Inteligencia Astral
-            const Text(
+            Text(
               "Inteligência Astral",
-              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 32),
+              style: TextStyle(color: AppTheme.colors.white, fontSize: 32),
             ),
             const SizedBox(height: 25),
 
-            const Padding(
+            Padding(
               padding: EdgeInsets.symmetric(horizontal: 25.0),
-              child: Divider(color: Colors.white,
+              child: Divider(color: AppTheme.colors.white,
                              thickness: 2,
               ),
             ),
@@ -47,9 +59,9 @@ class Login extends StatelessWidget {
             const SizedBox(height: 25),
 
             //Bem vindo
-            const Text(
+            Text(
               "Bem Vindo!",
-              style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 16),
+              style: TextStyle(color:AppTheme.colors.white, fontSize: 16),
             ),
 
             const SizedBox(height: 50),
@@ -108,28 +120,36 @@ class Login extends StatelessWidget {
             const SizedBox(height: 50),
 
             //increver
-            const Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(
-                  "Novo aqui? ",
-                  style: TextStyle(
-                      color: Colors.white
-                  ),
+            RichText(text: TextSpan(
+              children: <TextSpan>[
+              const TextSpan(
+                text: 'Novo aqui? ',
+                style: TextStyle(
+                        color: Colors.white
                 ),
-                SizedBox(width: 4),
-                Text(
-                  "REGISTRE-SE",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold
-                  ),
+              ),
+              TextSpan(
+                text: 'REGISTRE-SE',
+                style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                    ),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => Register(),
+                  ));
+                  }
                 ),
-            ],
-            )
+              ]
+              )
+            ),
+
+
           ]),
         ),
       ),
+      )
     );
   }
 }
