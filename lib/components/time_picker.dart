@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:day_night_time_picker/day_night_time_picker.dart';
+import 'package:inteligencia_astral/theme.dart';
 
 class MyTime extends StatefulWidget {
   const MyTime({Key? key}) : super(key: key);
@@ -25,7 +26,7 @@ class _MyTimeState extends State<MyTime> {
         sunrise: TimeOfDay(hour: 6, minute: 0), // optional
         sunset: TimeOfDay(hour: 18, minute: 0), // optional
         duskSpanInMinutes: 120, // optional
-        accentColor: Colors.purple,
+        accentColor: AppTheme.colors.purpura,
         onChange: onTimeChanged,
         onChangeDateTime: (DateTime dateTime) {
           // print(dateTime);

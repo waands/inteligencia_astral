@@ -2,6 +2,8 @@ import 'package:dash_chat_2/dash_chat_2.dart';
 import 'package:inteligencia_astral/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
+import 'package:inteligencia_astral/theme.dart';
+
 
 class Chat extends StatefulWidget {
   @override
@@ -38,6 +40,13 @@ class _ChatState extends State<Chat> {
       drawer: const NavMenu(),
       body: DashChat(
         currentUser: user,
+        messageOptions: MessageOptions(
+          // Customize message and user container colors here
+          currentUserContainerColor: AppTheme.colors.purpura,
+          currentUserTextColor: Colors.white,
+          containerColor: AppTheme.colors.green,
+          textColor: Colors.white,
+        ),
 
         onSend: (ChatMessage m) {
           setState(() {
