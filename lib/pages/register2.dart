@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:inteligencia_astral/pages/login.dart';
 import 'package:inteligencia_astral/components/text_field.dart';
 import 'package:inteligencia_astral/components/my_buttom.dart';
-import 'package:inteligencia_astral/components/calendar.dart';
+import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/time_picker.dart';
 import 'package:csc_picker/csc_picker.dart';
 import '/theme.dart';
-
-
 
 class Register2 extends StatelessWidget {
   Register2({super.key});
@@ -21,21 +19,18 @@ class Register2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Container(
-        decoration: BoxDecoration(
+        body: Container(
+      decoration: BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [AppTheme.colors.roxo1, AppTheme.colors.roxo2],
-          )
-        ),
-      
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [AppTheme.colors.roxo1, AppTheme.colors.roxo2],
+      )),
+
       //backgroundColor: const Color.fromARGB(255, 68, 20, 88),
       child: SafeArea(
         child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
             const SizedBox(height: 50),
             //logo
             Image.asset('lib/imgs/logo.png'),
@@ -51,8 +46,9 @@ class Register2 extends StatelessWidget {
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Divider(color: AppTheme.colors.white,
-                             thickness: 2,
+              child: Divider(
+                color: AppTheme.colors.white,
+                thickness: 2,
               ),
             ),
 
@@ -60,18 +56,15 @@ class Register2 extends StatelessWidget {
 
             //Apelido
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                Text(
-                  "Como deseja ser chamado",
-                  style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),              
-                ),
-                ]
-              )
-            ),
-            
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Text(
+                    "Como deseja ser chamado",
+                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                  ),
+                ])),
+
             MyTextField(
               controller: nicknameController,
               hintText: '...',
@@ -81,50 +74,51 @@ class Register2 extends StatelessWidget {
 
             //Data de nascimento
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                Text(
-                  "Data de nascimento",
-                  style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),              
-                ),
-                ]
-              )
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Text(
+                    "Data de nascimento",
+                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                  ),
+                ])),
+
+            //const DatePickerApp(),
+            //Future<DateTime?> showDatePicker(context: context, firstDate: DateTime(1900, 1, 1), initialDate: DateTime.now(), lastDate: DateTime.now())
+
+            MyCalendar(
+              hintText: 'Selecione a data',
+              onDateSelected: (DateTime selectedDate) {
+                String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                debugPrint("[data de nascimento]:  $formattedDate");
+              },
             ),
-            
-            const Calendar(),   
-            const SizedBox(height: 20),       
+
+            const SizedBox(height: 20),
 
             //Horário de nascimento
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                Text(
-                  "Horário de nascimento",
-                  style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),              
-                ),
-                ]
-              )
-            ),
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Text(
+                    "Horário de nascimento",
+                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                  ),
+                ])),
             const MyTime(),
-            const SizedBox(height: 20), 
-            
+            const SizedBox(height: 20),
+
             //Cidade de nascimento
             const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                Text(
-                  "Em qual cidade você nasceu",
-                  style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),              
-                ),
-                ]
-              )
-            ),
+                padding: EdgeInsets.symmetric(horizontal: 40.0),
+                child:
+                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Text(
+                    "Em qual cidade você nasceu",
+                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                  ),
+                ])),
 
             Padding(
               padding: const EdgeInsets.all(25),
@@ -133,9 +127,9 @@ class Register2 extends StatelessWidget {
                 countryDropdownLabel: "País",
                 stateDropdownLabel: "Estado",
                 cityDropdownLabel: "Cidade",
-                onCountryChanged: (country) { },
-                onStateChanged:(state) { },
-                onCityChanged:(city) { },
+                onCountryChanged: (country) {},
+                onStateChanged: (state) {},
+                onCityChanged: (city) {},
                 searchBarRadius: 5,
                 dropdownDecoration: BoxDecoration(
                   color: const Color.fromARGB(255, 126, 111, 195),
@@ -151,26 +145,20 @@ class Register2 extends StatelessWidget {
               ),
             ),
 
-            const SizedBox(height: 20), 
+            const SizedBox(height: 20),
 
             //Registrar 2/2
             MyButtom(
-              Texto: '2/2   REGISTRAR', 
-              onTap: () {
-                    Navigator.of(context).push(MaterialPageRoute(
+                Texto: '2/2   REGISTRAR',
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => Login(),
                   ));
-                  }
-            ),
+                }),
             const SizedBox(height: 10),
-            
-            ]
-          ),
+          ]),
         ),
       ),
-    )
-  );
-
+    ));
   }
-
 }

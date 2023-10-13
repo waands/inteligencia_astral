@@ -1,9 +1,10 @@
+import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligencia_astral/theme.dart';
 import 'package:inteligencia_astral/components/time_picker.dart';
 import 'package:inteligencia_astral/components/switch.dart';
-import 'package:inteligencia_astral/components/calendar.dart';
+import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:csc_picker/csc_picker.dart';
 
 class Profile extends StatelessWidget {
@@ -85,7 +86,13 @@ class Profile extends StatelessWidget {
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
 
-                  const Calendar(),
+                  MyCalendar(
+                    hintText: 'Selecione a data',
+                    onDateSelected: (DateTime selectedDate) {
+                      String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                      debugPrint("[data de nascimento]:  $formattedDate");
+                    },
+                  ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
