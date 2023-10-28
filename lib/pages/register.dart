@@ -6,7 +6,7 @@ import '/theme.dart';
 
 class Register extends StatelessWidget {
   Register({super.key});
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
@@ -72,7 +72,7 @@ return Scaffold(
             ),
             
             MyTextField(
-              controller: passwordController,
+              controller: emailController,
               hintText: '...',
               obscureText: false,
             ),
@@ -93,7 +93,7 @@ return Scaffold(
             ),
             
             MyTextField(
-              controller: confirmPasswordController,
+              controller: passwordController,
               hintText: '...',
               obscureText: false,
             ),
@@ -114,7 +114,7 @@ return Scaffold(
             ),
             
             MyTextField(
-              controller: usernameController,
+              controller: confirmPasswordController,
               hintText: '...',
               obscureText: false,
             ),
@@ -125,7 +125,7 @@ return Scaffold(
               Texto: '1/2   REGISTRAR', 
               onTap: () {
                     Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Register2(),
+                    builder: (context) => Register2(emailController: emailController.text, passwordController: passwordController.text,),
                   ));
                   }
             ),

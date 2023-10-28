@@ -1,6 +1,8 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligencia_astral/pages/login.dart';
 import 'package:inteligencia_astral/components/text_field.dart';
+import 'package:inteligencia_astral/backend/authentication.dart';
 import 'package:inteligencia_astral/components/my_buttom.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/time_picker.dart';
@@ -8,16 +10,29 @@ import 'package:csc_picker/csc_picker.dart';
 import '/theme.dart';
 
 class Register2 extends StatelessWidget {
-  Register2({super.key});
+  final String emailController;
+  final String passwordController;
+  Register2({super.key, required this.emailController, required this.passwordController});
   final nicknameController = TextEditingController();
-  final birthDateController = TextEditingController();
-  final birthHourController = TextEditingController();
-  final birthCityController = TextEditingController();
+  String birthDateController = '';
+  String birthHourController = '';
+  String birthCityController = '';
 
   DateTime selectedDate = DateTime.now();
 
+  void novoUser() async {
+    AuthenticationService authService = AuthenticationService();
+    debugPrint("$emailController, $passwordController");
+    Map<String, dynamic> data = {"Nickname":nicknameController.text,"Date":birthDateController,"Hour":birthHourController,"City":birthCityController};
+    authService.signup(
+        email: emailController, password: passwordController, data: data);
+  }
+
   @override
   Widget build(BuildContext context) {
+    String? _country;
+    String? _state;
+    String? _city;
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(
@@ -91,6 +106,7 @@ class Register2 extends StatelessWidget {
               onDateSelected: (DateTime selectedDate) {
                 String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
                 debugPrint("[data de nascimento]:  $formattedDate");
+                birthDateController = formattedDate;
               },
             ),
 
@@ -106,7 +122,12 @@ class Register2 extends StatelessWidget {
                     style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
                   ),
                 ])),
-            const MyTime(),
+            MyTime(onTimeChanged: (Time selectedTime) { 
+              String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
+              debugPrint("[horario de nascimento]:  $formattedTime");
+             },),
+              
+
             const SizedBox(height: 20),
 
             //Cidade de nascimento
@@ -127,10 +148,11 @@ class Register2 extends StatelessWidget {
                 countryDropdownLabel: "País",
                 stateDropdownLabel: "Estado",
                 cityDropdownLabel: "Cidade",
-                onCountryChanged: (country) {},
-                onStateChanged: (state) {},
-                onCityChanged: (city) {},
+                onCountryChanged: (country) {_country = country;},
+                onStateChanged: (state) {_state = state;},
+                onCityChanged: (city) {_city = city; birthCityController = "$_country $_state $_city"; debugPrint(birthCityController);},
                 searchBarRadius: 5,
+                
                 dropdownDecoration: BoxDecoration(
                   color: const Color.fromARGB(255, 126, 111, 195),
                   borderRadius: BorderRadius.circular(4),
@@ -144,6 +166,7 @@ class Register2 extends StatelessWidget {
                 ),
               ),
             ),
+            
 
             const SizedBox(height: 20),
 
@@ -151,6 +174,7 @@ class Register2 extends StatelessWidget {
             MyButtom(
                 Texto: '2/2   REGISTRAR',
                 onTap: () {
+                  novoUser();
                   Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => Login(),
                   ));

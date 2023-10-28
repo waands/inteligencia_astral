@@ -1,3 +1,4 @@
+import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,11 @@ class Profile extends StatelessWidget {
                           SwitchExample(),
                         ]),
                   ),
-                  MyTime(),
+                  MyTime(onTimeChanged: (Time selectedTime) { 
+                    String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
+                    debugPrint("[horario de nascimento]:  $formattedTime");
+                    },
+                  ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
@@ -109,7 +114,11 @@ class Profile extends StatelessWidget {
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
 
-                  const MyTime(),
+                  MyTime(onTimeChanged: (Time selectedTime) { 
+                    String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
+                    debugPrint("[horario de nascimento]:  $formattedTime");
+                    },
+                  ),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),

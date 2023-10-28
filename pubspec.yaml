@@ -38,6 +38,7 @@ dependencies:
   day_night_time_picker: ^1.3.0+1
   csc_picker: ^0.2.7
   dash_chat_2: 0.0.18
+  supabase_flutter: ^1.10.23
 
 dev_dependencies:
   flutter_test:

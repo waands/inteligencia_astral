@@ -3,7 +3,9 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:inteligencia_astral/theme.dart';
 
 class MyTime extends StatefulWidget {
-  const MyTime({Key? key}) : super(key: key);
+  final Function(Time) onTimeChanged; // Adicione um callback para retornar o valor
+
+  const MyTime({Key? key, required this.onTimeChanged}) : super(key: key);
 
   @override
   State<MyTime> createState() => _MyTimeState();
@@ -16,6 +18,7 @@ class _MyTimeState extends State<MyTime> {
     setState(() {
       _time = newTime;
     });
+    widget.onTimeChanged(newTime); // Chame o callback com o valor formatado
   }
 
   void openTimePicker() {
@@ -30,8 +33,6 @@ class _MyTimeState extends State<MyTime> {
         onChange: onTimeChanged,
         onChangeDateTime: (DateTime dateTime) {
           // print(dateTime);
-          String formattedTime = "${dateTime.hour}:${dateTime.minute}";
-          debugPrint("[horario de nascimento]:  $formattedTime");
         },
       ),
     );

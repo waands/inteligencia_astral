@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:inteligencia_astral/pages/chat.dart';
+import 'package:inteligencia_astral/backend/authentication.dart';
 import '/theme.dart';
 import 'package:inteligencia_astral/pages/register.dart';
 import 'package:inteligencia_astral/components/my_buttom.dart';
@@ -12,14 +13,18 @@ class Login extends StatelessWidget {
   Login({super.key});
 
   //text editing controller
-  final usernameController = TextEditingController();
+  final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUserIn(context) {
-    Navigator.of(context).push(MaterialPageRoute(
+  void signUserIn(context) async {
+    AuthenticationService authService = AuthenticationService();
+    authService.login(
+        email: emailController.text, password: passwordController.text);
+    /*Navigator.of(context).push(MaterialPageRoute(
       builder: (context) => Chat(),
-    ));
+    ));*/
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +74,7 @@ class Login extends StatelessWidget {
 
             //email
             MyTextField(
-              controller: usernameController,
+              controller: emailController,
               hintText: 'email',
               obscureText: false,
             ),
