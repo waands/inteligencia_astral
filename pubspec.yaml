@@ -39,7 +39,9 @@ dependencies:
   csc_picker: ^0.2.7
   dash_chat_2: 0.0.18
   supabase_flutter: ^1.10.23
-  http: ^0.14.0
+  http: ^1.1.0
+  sqflite: ^2.0.0+3
+  path_provider: ^2.0.0+3
 
 
 dev_dependencies:
