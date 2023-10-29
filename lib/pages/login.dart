@@ -16,18 +16,34 @@ class Login extends StatelessWidget {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
-  void signUserIn(context) async {
+  void signUserIn(BuildContext context) async {
     AuthenticationService authService = AuthenticationService();
-    authService.login(
-        email: emailController.text, password: passwordController.text);
-    /*Navigator.of(context).push(MaterialPageRoute(
-      builder: (context) => Chat(),
-    ));*/
+    try {
+      await authService.login(
+          email: emailController.text, password: passwordController.text);
+      // Navigate to Chat if login is successful
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Chat(),
+      ));
+    } catch (error) {
+      // Show error to the user
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text(error.toString())),
+      );
+    }
   }
-
 
   @override
   Widget build(BuildContext context) {
+    if (AuthenticationService().isLoggedIn()) {
+      WidgetsBinding.instance!.addPostFrameCallback((_) {
+        Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (context) => Chat(),
+        ));
+      });
+      return SizedBox
+          .shrink(); // or some other temporary widget until navigation is complete
+    }
     return Scaffold(
         body: Container(
       decoration: BoxDecoration(

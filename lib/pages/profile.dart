@@ -1,7 +1,9 @@
 import 'package:day_night_time_picker/lib/state/time.dart';
+import 'package:inteligencia_astral/backend/authentication.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:inteligencia_astral/pages/login.dart';
 import 'package:inteligencia_astral/theme.dart';
 import 'package:inteligencia_astral/components/time_picker.dart';
 import 'package:inteligencia_astral/components/switch.dart';
@@ -10,6 +12,13 @@ import 'package:csc_picker/csc_picker.dart';
 
 class Profile extends StatelessWidget {
   void editName() {}
+
+  void signOutAndNavigate(BuildContext context) async {
+    await AuthenticationService().signout();
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+      builder: (context) => Login(),
+    ));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +37,8 @@ class Profile extends StatelessWidget {
             )),
             child: SafeArea(
                 child: Center(
-                    child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                    child: ListView(
+                        // mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                   //Nome
                   RichText(
@@ -70,9 +79,11 @@ class Profile extends StatelessWidget {
                           SwitchExample(),
                         ]),
                   ),
-                  MyTime(onTimeChanged: (Time selectedTime) { 
-                    String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
-                    debugPrint("[horario de nascimento]:  $formattedTime");
+                  MyTime(
+                    onTimeChanged: (Time selectedTime) {
+                      String formattedTime =
+                          "${selectedTime.hour}:${selectedTime.minute}";
+                      debugPrint("[horario de nascimento]:  $formattedTime");
                     },
                   ),
 
@@ -94,7 +105,8 @@ class Profile extends StatelessWidget {
                   MyCalendar(
                     hintText: 'Selecione a data',
                     onDateSelected: (DateTime selectedDate) {
-                      String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
+                      String formattedDate =
+                          "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
                       debugPrint("[data de nascimento]:  $formattedDate");
                     },
                   ),
@@ -114,9 +126,11 @@ class Profile extends StatelessWidget {
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
 
-                  MyTime(onTimeChanged: (Time selectedTime) { 
-                    String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
-                    debugPrint("[horario de nascimento]:  $formattedTime");
+                  MyTime(
+                    onTimeChanged: (Time selectedTime) {
+                      String formattedTime =
+                          "${selectedTime.hour}:${selectedTime.minute}";
+                      debugPrint("[horario de nascimento]:  $formattedTime");
                     },
                   ),
 
@@ -159,13 +173,26 @@ class Profile extends StatelessWidget {
                       ),
                     ),
                   ),
-                  
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Divider(
                       color: AppTheme.colors.white,
                       thickness: 2,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25.0, vertical: 20.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: AppTheme.colors.roxo2,
+                        textStyle: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      onPressed: () => signOutAndNavigate(context),
+                      child: Text('Sair'),
                     ),
                   ),
                   //imagem mapa astral

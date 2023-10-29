@@ -1,5 +1,6 @@
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:flutter/material.dart';
+import 'package:inteligencia_astral/pages/chat.dart';
 import 'package:inteligencia_astral/pages/login.dart';
 import 'package:inteligencia_astral/components/text_field.dart';
 import 'package:inteligencia_astral/backend/authentication.dart';
@@ -12,20 +13,56 @@ import '/theme.dart';
 class Register2 extends StatelessWidget {
   final String emailController;
   final String passwordController;
-  Register2({super.key, required this.emailController, required this.passwordController});
+  Register2(
+      {super.key,
+      required this.emailController,
+      required this.passwordController});
   final nicknameController = TextEditingController();
-  String birthDateController = '';
-  String birthHourController = '';
+  late DateTime birthDateController;
+  late TimeOfDay birthHourController;
   String birthCityController = '';
 
   DateTime selectedDate = DateTime.now();
 
-  void novoUser() async {
+  void novoUser(BuildContext context) async {
     AuthenticationService authService = AuthenticationService();
     debugPrint("$emailController, $passwordController");
-    Map<String, dynamic> data = {"Nickname":nicknameController.text,"Date":birthDateController,"Hour":birthHourController,"City":birthCityController};
-    authService.signup(
-        email: emailController, password: passwordController, data: data);
+
+    DateTime birthDate = birthDateController;
+    TimeOfDay birthHour = birthHourController;
+
+    // Combine the date and hour into a single DateTime
+    DateTime combinedDateTime = DateTime(birthDate.year, birthDate.month,
+        birthDate.day, birthHour.hour, birthHour.minute);
+
+    String formattedDate = combinedDateTime
+        .toIso8601String()
+        .replaceAll('T', ' ')
+        .split('.')
+        .first;
+    Map<String, dynamic> data = {
+      "nick": nicknameController.text,
+      "birth_date": formattedDate,
+      "city": birthCityController
+    };
+
+    try {
+      debugPrint("Criando usuário");
+      await authService.signup(
+          email: emailController, password: passwordController, data: data);
+      debugPrint("Usuário criado com sucesso");
+      Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => Chat(),
+      ));
+    } catch (e) {
+      // Show the error message using SnackBar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(e.toString()),
+          backgroundColor: Colors.red,
+        ),
+      );
+    }
   }
 
   @override
@@ -104,9 +141,7 @@ class Register2 extends StatelessWidget {
             MyCalendar(
               hintText: 'Selecione a data',
               onDateSelected: (DateTime selectedDate) {
-                String formattedDate = "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
-                debugPrint("[data de nascimento]:  $formattedDate");
-                birthDateController = formattedDate;
+                birthDateController = selectedDate;
               },
             ),
 
@@ -122,11 +157,11 @@ class Register2 extends StatelessWidget {
                     style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
                   ),
                 ])),
-            MyTime(onTimeChanged: (Time selectedTime) { 
-              String formattedTime = "${selectedTime.hour}:${selectedTime.minute}";
-              debugPrint("[horario de nascimento]:  $formattedTime");
-             },),
-              
+            MyTime(
+              onTimeChanged: (Time selectedTime) {
+                birthHourController = selectedTime;
+              },
+            ),
 
             const SizedBox(height: 20),
 
@@ -148,11 +183,18 @@ class Register2 extends StatelessWidget {
                 countryDropdownLabel: "País",
                 stateDropdownLabel: "Estado",
                 cityDropdownLabel: "Cidade",
-                onCountryChanged: (country) {_country = country;},
-                onStateChanged: (state) {_state = state;},
-                onCityChanged: (city) {_city = city; birthCityController = "$_country $_state $_city"; debugPrint(birthCityController);},
+                onCountryChanged: (country) {
+                  _country = country;
+                },
+                onStateChanged: (state) {
+                  _state = state;
+                },
+                onCityChanged: (city) {
+                  _city = city;
+                  birthCityController = "$_country $_state $_city";
+                  debugPrint(birthCityController);
+                },
                 searchBarRadius: 5,
-                
                 dropdownDecoration: BoxDecoration(
                   color: const Color.fromARGB(255, 126, 111, 195),
                   borderRadius: BorderRadius.circular(4),
@@ -166,7 +208,6 @@ class Register2 extends StatelessWidget {
                 ),
               ),
             ),
-            
 
             const SizedBox(height: 20),
 
@@ -174,10 +215,7 @@ class Register2 extends StatelessWidget {
             MyButtom(
                 Texto: '2/2   REGISTRAR',
                 onTap: () {
-                  novoUser();
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => Login(),
-                  ));
+                  novoUser(context);
                 }),
             const SizedBox(height: 10),
           ]),

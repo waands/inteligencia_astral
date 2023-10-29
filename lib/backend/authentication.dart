@@ -1,8 +1,15 @@
 import 'package:inteligencia_astral/main.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-
 class AuthenticationService {
+  bool isLoggedIn() {
+    return supabase.auth.currentSession != null;
+  }
+
+  Future<void> signout() async {
+    await supabase.auth.signOut();
+  }
+
   Future<void> signup({
     required String email,
     required String password,
@@ -16,8 +23,7 @@ class AuthenticationService {
     required String email,
     required String password,
   }) async {
-    final AuthResponse res = 
-        await supabase.auth.signInWithPassword(
+    final AuthResponse res = await supabase.auth.signInWithPassword(
       email: email,
       password: password,
     );
