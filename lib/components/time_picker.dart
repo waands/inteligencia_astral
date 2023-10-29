@@ -3,7 +3,8 @@ import 'package:day_night_time_picker/day_night_time_picker.dart';
 import 'package:inteligencia_astral/theme.dart';
 
 class MyTime extends StatefulWidget {
-  final Function(Time) onTimeChanged; // Adicione um callback para retornar o valor
+  final Function(Time)
+      onTimeChanged; // Adicione um callback para retornar o valor
 
   const MyTime({Key? key, required this.onTimeChanged}) : super(key: key);
 
