@@ -8,35 +8,34 @@ class NavMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
-        child: ListView(
-          padding: EdgeInsets.zero,
-          children: [
-            // const DrawerHeader(
-            //   decoration: BoxDecoration(
-            //     color: Colors.blue,
-            //   ),
-            //   child: Text('Drawer Header'),
-            // ),
-            ListTile(
-              title: const Text('Chat'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Chat(),
-                ));
-              },
-            ),
-            ListTile(
-              title: const Text('Pefil'),
-              onTap: () {
-                Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => Profile(),
-                ));
-              },
-            ),
-          ],
-        ),
-      
-      
+      child: ListView(
+        padding: EdgeInsets.zero,
+        children: [
+          // const DrawerHeader(
+          //   decoration: BoxDecoration(
+          //     color: Colors.blue,
+          //   ),
+          //   child: Text('Drawer Header'),
+          // ),
+          const SizedBox(height: 25),
+          ListTile(
+            title: const Text('Chat'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Chat(),
+              ));
+            },
+          ),
+          ListTile(
+            title: const Text('Pefil'),
+            onTap: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) => Profile(),
+              ));
+            },
+          ),
+        ],
+      ),
     );
   }
 }

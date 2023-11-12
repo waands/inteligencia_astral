@@ -122,27 +122,87 @@ class _ChatState extends State<Chat> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Inteligencia Astral'),
-        backgroundColor: AppTheme.colors.purpura,
-      ),
-      drawer: const NavMenu(),
-      body: DashChat(
-        currentUser: user,
-        messageOptions: MessageOptions(
-          currentUserContainerColor: AppTheme.colors.purpura,
-          currentUserTextColor: Colors.white,
-          containerColor: AppTheme.colors.green,
-          textColor: Colors.white,
+        appBar: AppBar(
+          title: const Text('Inteligencia Astral'),
+          backgroundColor: AppTheme.colors.purpura,
         ),
-        onSend: (ChatMessage m) {
-          setState(() {
-            messages.insert(0, m);
-          });
-          sendMessage(m);
-        },
-        messages: messages,
-      ),
-    );
+        drawer: const NavMenu(),
+        body: Container(
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [AppTheme.colors.purpura, AppTheme.colors.roxo2],
+            ),
+          ),
+          child: DashChat(
+            currentUser: user,
+
+            //inicio de configuracao UI
+            messageOptions: MessageOptions(
+              currentUserContainerColor: AppTheme.colors.purpura,
+              currentUserTextColor: Colors.white,
+              containerColor: AppTheme.colors.green,
+              textColor: Colors.white,
+              messageDecorationBuilder:
+                  (message, previousMessage, nextMessage) {
+                return BoxDecoration(
+                  color: message.user.id == user.id
+                      ? AppTheme.colors.purpura
+                      : AppTheme.colors.green,
+                  borderRadius: BorderRadius.circular(8.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.2),
+                      spreadRadius: 2.0,
+                      blurRadius: 5.0,
+                    ),
+                  ],
+                );
+              },
+            ),
+            inputOptions: InputOptions(
+              inputDecoration: InputDecoration(
+                filled: true,
+                iconColor: AppTheme.colors.green,
+                fillColor: AppTheme.colors.white,
+                hintText: "Me faça uma pergunta...",
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: AppTheme.colors.roxo2),
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+              ),
+              sendButtonBuilder: (onPressed) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: AppTheme.colors.green, // Cor do botão de enviar
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  margin: EdgeInsets.only(left: 4.0),
+                  child: IconButton(
+                    onPressed: onPressed,
+                    icon: Icon(
+                      Icons.send,
+                      color: AppTheme
+                          .colors.white, // Cor do ícone do botão de enviar
+                    ),
+                  ),
+                );
+              },
+            ),
+            //fim de configuracao UI
+
+            onSend: (ChatMessage m) {
+              setState(() {
+                messages.insert(0, m);
+              });
+              sendMessage(m);
+            },
+            messages: messages,
+          ),
+        ));
   }
 }

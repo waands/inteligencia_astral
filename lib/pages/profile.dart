@@ -36,10 +36,10 @@ class Profile extends StatelessWidget {
               colors: [AppTheme.colors.purpura, AppTheme.colors.roxo2],
             )),
             child: SafeArea(
-                child: Center(
-                    child: ListView(
-                        // mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
+                child: Stack(children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
                   //Nome
                   RichText(
                     text: TextSpan(
@@ -181,21 +181,34 @@ class Profile extends StatelessWidget {
                       thickness: 2,
                     ),
                   ),
-                  Padding(
+                ],
+              ),
+
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Container(
+                  width: double.infinity,
+                  child: Padding(
                     padding: const EdgeInsets.symmetric(
                         horizontal: 25.0, vertical: 20.0),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         primary: AppTheme.colors.roxo2,
-                        textStyle: TextStyle(
+                        textStyle: const TextStyle(
                           color: Colors.white,
                         ),
+                        minimumSize: const Size(
+                            double.infinity, 50), // Define a altura desejada
                       ),
                       onPressed: () => signOutAndNavigate(context),
                       child: Text('Sair'),
                     ),
                   ),
-                  //imagem mapa astral
-                ])))));
+                ),
+              ),
+              //imagem mapa astral
+            ]))));
   }
 }
