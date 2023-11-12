@@ -81,145 +81,192 @@ class Register2 extends StatelessWidget {
 
       //backgroundColor: const Color.fromARGB(255, 68, 20, 88),
       child: SafeArea(
-        child: Center(
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            const SizedBox(height: 50),
-            //logo
-            Image.asset('lib/imgs/logo.png'),
+        child: Stack(children: [
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const SizedBox(height: 50),
+              //logo
+              Image.asset('lib/imgs/logo.png'),
 
-            const SizedBox(height: 25),
+              const SizedBox(height: 25),
 
-            //Inteligencia Astral
-            Text(
-              "Inteligência Astral",
-              style: TextStyle(color: AppTheme.colors.white, fontSize: 32),
-            ),
-            const SizedBox(height: 25),
-
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 25.0),
-              child: Divider(
-                color: AppTheme.colors.white,
-                thickness: 2,
+              //Inteligencia Astral
+              Text(
+                "Inteligência Astral",
+                style: TextStyle(color: AppTheme.colors.white, fontSize: 32),
               ),
-            ),
+              const SizedBox(height: 25),
 
-            const SizedBox(height: 25),
-
-            //Apelido
-            const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Text(
-                    "Como deseja ser chamado",
-                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
-                  ),
-                ])),
-
-            MyTextField(
-              controller: nicknameController,
-              hintText: '...',
-              obscureText: false,
-            ),
-            const SizedBox(height: 20),
-
-            //Data de nascimento
-            const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Text(
-                    "Data de nascimento",
-                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
-                  ),
-                ])),
-
-            //const DatePickerApp(),
-            //Future<DateTime?> showDatePicker(context: context, firstDate: DateTime(1900, 1, 1), initialDate: DateTime.now(), lastDate: DateTime.now())
-
-            MyCalendar(
-              hintText: 'Selecione a data',
-              onDateSelected: (DateTime selectedDate) {
-                birthDateController = selectedDate;
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            //Horário de nascimento
-            const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Text(
-                    "Horário de nascimento",
-                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
-                  ),
-                ])),
-            MyTime(
-              onTimeChanged: (Time selectedTime) {
-                birthHourController = selectedTime;
-              },
-            ),
-
-            const SizedBox(height: 20),
-
-            //Cidade de nascimento
-            const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child:
-                    Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-                  Text(
-                    "Em qual cidade você nasceu",
-                    style: TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
-                  ),
-                ])),
-
-            Padding(
-              padding: const EdgeInsets.all(25),
-              child: CSCPicker(
-                flagState: CountryFlag.DISABLE,
-                countryDropdownLabel: "País",
-                stateDropdownLabel: "Estado",
-                cityDropdownLabel: "Cidade",
-                onCountryChanged: (country) {
-                  _country = country;
-                },
-                onStateChanged: (state) {
-                  _state = state;
-                },
-                onCityChanged: (city) {
-                  _city = city;
-                  birthCityController = "$_country $_state $_city";
-                  debugPrint(birthCityController);
-                },
-                searchBarRadius: 5,
-                dropdownDecoration: BoxDecoration(
-                  color: const Color.fromARGB(255, 126, 111, 195),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                disabledDropdownDecoration: BoxDecoration(
-                  color: Color.fromARGB(255, 50, 17, 65),
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                selectedItemStyle: const TextStyle(
-                  color: Colors.white,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                child: Divider(
+                  color: AppTheme.colors.white,
+                  thickness: 2,
                 ),
               ),
-            ),
 
-            const SizedBox(height: 20),
+              const SizedBox(height: 25),
 
-            //Registrar 2/2
-            MyButtom(
+              //Apelido
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Como deseja ser chamado",
+                          style:
+                              TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                        ),
+                      ])),
+
+              MyTextField(
+                controller: nicknameController,
+                hintText: '...',
+                obscureText: false,
+              ),
+              const SizedBox(height: 20),
+
+              //Data de nascimento
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Data de nascimento",
+                          style:
+                              TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                        ),
+                      ])),
+
+              //const DatePickerApp(),
+              //Future<DateTime?> showDatePicker(context: context, firstDate: DateTime(1900, 1, 1), initialDate: DateTime.now(), lastDate: DateTime.now())
+
+              MyCalendar(
+                hintText: 'Selecione a data',
+                onDateSelected: (DateTime selectedDate) {
+                  birthDateController = selectedDate;
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              //Horário de nascimento
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Horário de nascimento",
+                          style:
+                              TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                        ),
+                      ])),
+              MyTime(
+                onTimeChanged: (Time selectedTime) {
+                  birthHourController = selectedTime;
+                },
+              ),
+
+              const SizedBox(height: 20),
+
+              //Cidade de nascimento
+              const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 40.0),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          "Em qual cidade você nasceu",
+                          style:
+                              TextStyle(color: Color(0xFFFFFFFF), fontSize: 18),
+                        ),
+                      ])),
+
+              Padding(
+                padding: const EdgeInsets.all(25),
+                child: CSCPicker(
+                  flagState: CountryFlag.DISABLE,
+                  countryDropdownLabel: "País",
+                  stateDropdownLabel: "Estado",
+                  cityDropdownLabel: "Cidade",
+                  onCountryChanged: (country) {
+                    _country = country;
+                  },
+                  onStateChanged: (state) {
+                    _state = state;
+                  },
+                  onCityChanged: (city) {
+                    _city = city;
+                    birthCityController = "$_country $_state $_city";
+                    debugPrint(birthCityController);
+                  },
+                  searchBarRadius: 5,
+                  dropdownDecoration: BoxDecoration(
+                    color: const Color.fromARGB(255, 126, 111, 195),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  disabledDropdownDecoration: BoxDecoration(
+                    color: Color.fromARGB(255, 50, 17, 65),
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  selectedItemStyle: const TextStyle(
+                    color: Colors.white,
+                  ),
+                ),
+              ),
+
+              const SizedBox(height: 20),
+            ],
+          ),
+
+          //Registrar 2/2
+          Positioned(
+            bottom: 20,
+            left: 0,
+            right: 0,
+            child: Container(
+              width: double.infinity,
+              child: MyButtom(
                 Texto: '2/2   REGISTRAR',
                 onTap: () {
-                  novoUser(context);
-                }),
-            const SizedBox(height: 10),
-          ]),
-        ),
+                  if (nicknameController.text.isNotEmpty &&
+                      birthDateController != null &&
+                      birthHourController != null &&
+                      birthCityController.isNotEmpty) {
+                    novoUser(context);
+                  } else {
+                    // Campos não preenchidos, exibir mensagem de erro
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: Text("Erro"),
+                          content: Text("Por favor, preencha todos os campos."),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              child: Text(
+                                "OK",
+                                style: TextStyle(color: AppTheme.colors.roxo2),
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+          //const SizedBox(height: 10),
+        ]),
       ),
     ));
   }
