@@ -5,15 +5,22 @@ import 'package:inteligencia_astral/theme.dart';
 class MyTime extends StatefulWidget {
   final Function(Time)
       onTimeChanged; // Adicione um callback para retornar o valor
+  final Time timeShown;
 
-  const MyTime({Key? key, required this.onTimeChanged}) : super(key: key);
+  const MyTime({Key? key, required this.onTimeChanged, required this.timeShown}) : super(key: key);
 
   @override
   State<MyTime> createState() => _MyTimeState();
 }
 
 class _MyTimeState extends State<MyTime> {
-  Time _time = Time(hour: 11, minute: 30, second: 20);
+  late Time _time;
+
+  @override
+  void initState() {
+    super.initState();
+    _time = widget.timeShown; // Inicialize _time com widget.timeShown
+  }
 
   void onTimeChanged(Time newTime) {
     setState(() {

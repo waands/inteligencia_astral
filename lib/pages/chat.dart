@@ -149,12 +149,12 @@ class _ChatState extends State<Chat> {
                 return BoxDecoration(
                   color: message.user.id == user.id
                       ? AppTheme.colors.purpura
-                      : AppTheme.colors.green,
+                      : const Color.fromARGB(255, 143, 212, 193), //mudei um pouco a cor pra ficar mais fácil de ler
                   borderRadius: BorderRadius.circular(8.0),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.2),
-                      spreadRadius: 2.0,
+                      spreadRadius: 3.0,
                       blurRadius: 5.0,
                     ),
                   ],

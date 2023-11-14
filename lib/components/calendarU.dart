@@ -4,7 +4,8 @@ import '/theme.dart';
 class MyCalendar extends StatefulWidget {
   final Function(DateTime) onDateSelected;
   final String hintText;
-  const MyCalendar({Key? key, required this.hintText, required this.onDateSelected})
+  final DateTime shownDate;
+  const MyCalendar({Key? key, required this.hintText, required this.onDateSelected, required this.shownDate})
       : super(key: key);
 
   @override
@@ -17,7 +18,7 @@ class _MyCalendarState extends State<MyCalendar> {
   void openDatePicker() async {
     final DateTime? pickedDate = await showDatePicker(
       context: context,
-      initialDate: DateTime.now(),
+      initialDate: widget.shownDate,
       firstDate: DateTime(1900, 1, 1),
       lastDate: DateTime.now(),
       builder: (BuildContext context, Widget? child) {

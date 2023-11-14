@@ -33,7 +33,7 @@ class DataHandler {
         users.add(User(
           id: user['id']?.toString(),
           nick: user['nick'].toString(),
-          birthdate: user['birthdate'].toString(),
+          birthdate: user['birth_date'].toString(),
           city: user['city'].toString(),
         ));
       }

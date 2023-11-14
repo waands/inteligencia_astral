@@ -4,10 +4,12 @@ import 'package:inteligencia_astral/backend/dataHandler.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
 import 'package:flutter/material.dart';
+import 'package:inteligencia_astral/components/text_field.dart';
 import 'package:inteligencia_astral/pages/login.dart';
 import 'package:inteligencia_astral/theme.dart';
 import 'package:inteligencia_astral/components/time_picker.dart';
 import 'package:inteligencia_astral/components/switch.dart';
+import 'package:intl/intl.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:csc_picker/csc_picker.dart';
 
@@ -19,6 +21,7 @@ class Profile extends StatefulWidget {
 
 class _ProfileState extends State<Profile> {
   late User currentUser;
+  bool isLoading = true;
 
   @override
   void initState() {
@@ -32,6 +35,7 @@ class _ProfileState extends State<Profile> {
     if (users.isNotEmpty) {
       setState(() {
         currentUser = users.first;
+        isLoading = false; //os dados foram carregados
       });
     }
   }
@@ -49,6 +53,32 @@ class _ProfileState extends State<Profile> {
 
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      drawer: const NavMenu(),
+      body: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: [AppTheme.colors.purpura, AppTheme.colors.roxo2],
+              ),
+            ),
+          ),
+          Center(
+            child: isLoading
+                ? CircularProgressIndicator(
+                  color: AppTheme.colors.white,
+                )
+                : buildProfilePage(), // Exibe a página do perfil após o carregamento
+          ),],),
+    );
+  }
+
+  Widget buildProfilePage() {
+    TimeOfDay birth = TimeOfDay.fromDateTime(DateTime.parse(currentUser.birthdate));
+
     return Scaffold(
         appBar: AppBar(
           title: const Text('Inteligencia Astral'),
@@ -76,12 +106,12 @@ class _ProfileState extends State<Profile> {
                           text: currentUser.nick,
                           style: TextStyle(fontSize: 30, color: Colors.white),
                         ),
-                        WidgetSpan(
+                        /*WidgetSpan(
                           child: IconButton(
                               onPressed: editName,
                               icon: const Icon(Icons.edit_note,
                                   color: Colors.white)),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
@@ -98,21 +128,23 @@ class _ProfileState extends State<Profile> {
                   const Padding(
                     padding: EdgeInsets.symmetric(horizontal: 25.0),
                     child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(
-                            'Notificações diárias',
-                            style: TextStyle(fontSize: 20, color: Colors.white),
-                          ),
-                          SwitchExample(),
-                        ]),
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Notificações diárias',
+                          style: TextStyle(fontSize: 20, color: Colors.white),
+                        ),
+                        SwitchExample(),
+                      ],
+                    ),
                   ),
+
                   MyTime(
                     onTimeChanged: (Time selectedTime) {
                       String formattedTime =
                           "${selectedTime.hour}:${selectedTime.minute}";
                       debugPrint("[horario de nascimento]:  $formattedTime");
-                    },
+                    }, timeShown: Time(hour: 00, minute: 00, second: 00),
                   ),
 
                   Padding(
@@ -131,14 +163,14 @@ class _ProfileState extends State<Profile> {
                   ),
 
                   MyCalendar(
-                    hintText: 'Selecione a data',
+                    hintText: DateFormat('dd/MM/yyyy').format(DateTime.parse(currentUser.birthdate)),
                     onDateSelected: (DateTime selectedDate) {
                       String formattedDate =
                           "${selectedDate.day}-${selectedDate.month}-${selectedDate.year}";
                       debugPrint("[data de nascimento]:  $formattedDate");
-                    },
+                    }, shownDate: DateTime.parse(currentUser.birthdate),
                   ),
-
+                
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),
                     child: Divider(
@@ -159,7 +191,9 @@ class _ProfileState extends State<Profile> {
                       String formattedTime =
                           "${selectedTime.hour}:${selectedTime.minute}";
                       debugPrint("[horario de nascimento]:  $formattedTime");
-                    },
+                    }, 
+                    
+                    timeShown: Time(hour: birth.hour, minute: birth.minute, second: 00),
                   ),
 
                   Padding(
@@ -177,30 +211,21 @@ class _ProfileState extends State<Profile> {
                     style: TextStyle(fontSize: 20, color: Colors.white),
                   ),
 
-                  Padding(
-                    padding: const EdgeInsets.all(25),
-                    child: CSCPicker(
-                      flagState: CountryFlag.DISABLE,
-                      countryDropdownLabel: "País",
-                      stateDropdownLabel: "Estado",
-                      cityDropdownLabel: "Cidade",
-                      onCountryChanged: (country) {},
-                      onStateChanged: (state) {},
-                      onCityChanged: (city) {},
-                      searchBarRadius: 5,
-                      dropdownDecoration: BoxDecoration(
-                        color: const Color.fromARGB(255, 126, 111, 195),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      disabledDropdownDecoration: BoxDecoration(
-                        color: Color.fromARGB(255, 50, 17, 65),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      selectedItemStyle: const TextStyle(
-                        color: Colors.white,
-                      ),
+                  Container(
+                    padding: const EdgeInsets.all(15),
+                    margin: const EdgeInsets.symmetric(horizontal: 25),
+                    decoration: BoxDecoration(
+                      color: const Color.fromARGB(255, 126, 111, 195),
+                      borderRadius: BorderRadius.circular(4),
                     ),
-                  ),
+                    child: Center(
+                        child: Text(
+                      currentUser.city,
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                      ),
+                    ))),
 
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 25.0),

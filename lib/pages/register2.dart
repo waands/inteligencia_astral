@@ -148,7 +148,7 @@ class Register2 extends StatelessWidget {
                 hintText: 'Selecione a data',
                 onDateSelected: (DateTime selectedDate) {
                   birthDateController = selectedDate;
-                },
+                }, shownDate: DateTime.now(),
               ),
 
               const SizedBox(height: 20),
@@ -168,7 +168,7 @@ class Register2 extends StatelessWidget {
               MyTime(
                 onTimeChanged: (Time selectedTime) {
                   birthHourController = selectedTime;
-                },
+                }, timeShown: Time(hour: 00, minute: 00, second: 00),
               ),
 
               const SizedBox(height: 20),
