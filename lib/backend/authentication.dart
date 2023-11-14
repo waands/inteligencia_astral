@@ -3,7 +3,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class AuthenticationService {
   bool isLoggedIn() {
-    return supabase.auth.currentSession != null;
+    final session = supabase.auth.currentSession;
+    return session != null;
+  }
+
+  String getUserId() {
+    return supabase.auth.currentSession?.user?.id.toString() ?? '';
   }
 
   Future<void> signout() async {

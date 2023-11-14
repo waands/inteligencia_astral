@@ -1,5 +1,6 @@
 import 'package:day_night_time_picker/lib/state/time.dart';
 import 'package:inteligencia_astral/backend/authentication.dart';
+import 'package:inteligencia_astral/backend/dataHandler.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:inteligencia_astral/components/navigation_menu.dart';
 import 'package:flutter/material.dart';
@@ -10,8 +11,34 @@ import 'package:inteligencia_astral/components/switch.dart';
 import 'package:inteligencia_astral/components/calendarU.dart';
 import 'package:csc_picker/csc_picker.dart';
 
-class Profile extends StatelessWidget {
-  void editName() {}
+
+class Profile extends StatefulWidget {
+  @override
+  _ProfileState createState() => _ProfileState();
+}
+
+class _ProfileState extends State<Profile> {
+  late User currentUser;
+
+  @override
+  void initState() {
+    super.initState();
+    fetchUserData();
+  }
+
+  Future<void> fetchUserData() async {
+    List<User> users = await DataHandler().fetchUserData();
+
+    if (users.isNotEmpty) {
+      setState(() {
+        currentUser = users.first;
+      });
+    }
+  }
+
+  void editName() {
+    // Implemente a lógica de edição do nome se necessário
+  }
 
   void signOutAndNavigate(BuildContext context) async {
     await AuthenticationService().signout();
@@ -28,12 +55,13 @@ class Profile extends StatelessWidget {
           backgroundColor: AppTheme.colors.purpura,
         ),
         drawer: const NavMenu(),
-        body: Container(
+        body: currentUser != null
+          ? Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [AppTheme.colors.purpura, AppTheme.colors.roxo2],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [AppTheme.colors.purpura, AppTheme.colors.roxo2],
             )),
             child: SafeArea(
                 child: Stack(children: [
@@ -44,8 +72,8 @@ class Profile extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       children: [
-                        const TextSpan(
-                          text: "Gustavo Lorenzo",
+                        TextSpan(
+                          text: currentUser.nick,
                           style: TextStyle(fontSize: 30, color: Colors.white),
                         ),
                         WidgetSpan(
@@ -209,6 +237,40 @@ class Profile extends StatelessWidget {
                 ),
               ),
               //imagem mapa astral
-            ]))));
+            ]))
+          ): 
+        Center(
+          child: Stack(
+            children: [
+              const CircularProgressIndicator(),
+              Positioned(
+                bottom: 20,
+                left: 0,
+                right: 0,
+                child: Container(
+                  width: double.infinity,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 25.0, vertical: 20.0),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: AppTheme.colors.roxo2,
+                        textStyle: const TextStyle(
+                          color: Colors.white,
+                        ),
+                        minimumSize: const Size(
+                            double.infinity, 50), // Define a altura desejada
+                      ),
+                      onPressed: () => signOutAndNavigate(context),
+                      child: Text('Sair'),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          
+        ),
+      );
   }
 }
